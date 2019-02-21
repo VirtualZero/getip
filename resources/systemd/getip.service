@@ -1,0 +1,14 @@
+[Unit]
+Description=Gunicorn instance to serve getip
+After=network.target
+
+[Service]
+User=YOUR_USER_NAME
+Group=www-data
+WorkingDirectory=/home/YOUR_USER_NAME/getip
+Environment='APP_SECRET_KEY=YOUR_SUPER_SECRET_KEY'
+ExecStart=/bin/bash -c 'cd /home/YOUR_USER_NAME/getip && source /home/YOUR_USER_NAME/miniconda3/bin/activate getip && gunicorn --workers 3 --bind unix:getip.sock -m 007 wsgi:app'
+
+[Install]
+WantedBy=multi-user.target
+
